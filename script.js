@@ -1786,21 +1786,21 @@ const LS_KEYS = {
 
 // Mock Products
 const PRODUCTS = [
-  { id: 'Xbox Gift Card 10€', name: 'Carta Regalo Xbox 10€', price: 9.00, old: 10.00, img: 'assets/xbox10.png', tag: 'console' },
+  { id: 'Xbox Gift Card 10€', name: 'Carta Regalo Xbox 10€', price: 8.00, old: 8.99, img: 'assets/xbox10.png', tag: 'console' },
   { id: 'Xbox Gift Card 20€', name: 'Carta Regalo Xbox 20€', price: 19.15, old: 20.00, img: 'assets/xbox20p.png', tag: 'console' },
-  { id: 'Xbox Gift Card 50€', name: 'Carta Regalo Xbox 50€', price: 47.50, old: 50.00, img: 'assets/xbox50.jpg', tag: 'console' },
+  { id: 'Xbox Gift Card 50€', name: 'Carta Regalo Xbox 50€', price: 48.00, old: 50.00, img: 'assets/xbox50.jpg', tag: 'console' },
   { id: 'Playstation Gift Card 10€', name: 'Carta Regalo PlayStation 10€', price: 9.00, old: 10.00, img: 'assets/play10%E2%82%AC.png', tag: 'console' },
   { id: 'Playstation Gift Card 20€', name: 'Carta Regalo PlayStation 20€', price: 19.15, old: 20.00, img: 'assets/play20.jpg', tag: 'console' },
-  { id: 'Playstation Gift Card 50€', name: 'Carta Regalo PlayStation 50€', price: 47.50, old: 50.00, img: 'assets/play50%E2%82%AC.png', tag: 'console' },
+  { id: 'Playstation Gift Card 50€', name: 'Carta Regalo PlayStation 50€', price: 48.00, old: 50.00, img: 'assets/play50%E2%82%AC.png', tag: 'console' },
   { id: 'Steam Gift Card 10€', name: 'Carta Regalo Steam ', price: 9.00, old: 10.00, img: 'https://images.unsplash.com/photo-1606813907291-76db6251b53a?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
-  { id: 'Steam Gift Card 20€', name: 'Carta Regalo Steam ', price: 23.50, old: 25.00, img: 'https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
-  { id: 'Steam Gift Card 50€', name: 'Carta Regalo Steam ', price: 47.50, old: 50.00, img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476b?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
+  { id: 'Steam Gift Card 25€', name: 'Carta Regalo Steam ', price: 23.60, old: 25.00, img: 'https://images.unsplash.com/photo-1605901309584-818e25960a8b?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
+  { id: 'Steam Gift Card 50€', name: 'Carta Regalo Steam ', price: 48.00, old: 50.00, img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476b?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
   { id: '1000 Valorant Points', name: '1000 Valorant points ', price: 9.00, old: 10.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
   { id: '2050 Valorant Points', name: '2050 Valorant points ', price: 18.80, old: 20.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
-  { id: '5350 Valorant Points', name: '5350 Valorant points ', price: 47.50, old: 50.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
+  { id: '5350 Valorant Points', name: '5350 Valorant points ', price: 48.00, old: 50.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
   { id: '1000 V-bucks', name: '1000 V-bucks Fortnite gift card ', price: 7.59, old: 8.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console' },
   { id: '2800 V-bucks', name: '2800 V-bucks Fortnite gift card ', price: 21.99, old: 23.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console'},
-  { id: '5000 V-bucks', name: '5000 V-bucks Fortnite gift card ', price: 34.99, old: 35.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console'},
+  { id: '5000 V-bucks', name: '5000 V-bucks Fortnite gift card ', price: 35.50, old: 36.99, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console'},
   { id: '13500 V-bucks', name: '13500 V-bucks Fortnite gift card ', price: 88.59, old: 90.00, img: 'https://images.unsplash.com/photo-1601935111741-a7f3fb0c44cf?q=80&w=1200&auto=format&fit=crop', tag: 'console'},
   { id: 'headset', name: 'Cuffie Gaming 7.1', price: 89.90, old: 103.39, img: 'https://images.unsplash.com/photo-1599669454699-248893623440?q=80&w=1200&auto=format&fit=crop', tag: 'accessori' }
 ];
