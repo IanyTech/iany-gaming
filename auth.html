@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#8b5cf6">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Iany Gaming - Accedi o Registrati</title>
+  <meta name="description" content="Accedi o registrati al tuo account Iany Gaming per accedere a offerte esclusive e gestire i tuoi acquisti.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"></noscript>
+  <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
+  <link rel="icon" href="https://fav.farm/🎮" />
+  <!-- Preload critical resources -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" as="script">
+  <link rel="preload" href="script.js" as="script">
+  
+  <!-- Load Supabase with defer -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="script.js" defer></script>
+  
+  <!-- Inline critical CSS for above-the-fold content -->
+  <style>
+    /* Critical CSS for initial render */
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .auth-page { min-height: 100vh; background: #0f172a; color: #fff; }
+    .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+    .btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-align: center; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+    .btn.primary { background: #8b5cf6; color: white; }
+    .auth-input { width: 100%; padding: 0.75rem; border: 1px solid #334155; border-radius: 0.5rem; background: #1e293b; color: white; font-size: 1rem; }
+    /* Add more critical styles as needed */
+  </style>
+  <!-- Loyalty Points Styles -->
+  <style>
+    /* Loyalty Points */
+    .loyalty-section {
+      margin-top: 24px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .loyalty-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .loyalty-balance {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .loyalty-tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+    
+    .tier-bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
+    .tier-silver { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; }
+    .tier-gold { background: linear-gradient(135deg, #ffd700, #daa520); color: #000; }
+    .tier-platinum { background: linear-gradient(135deg, #e5e4e2, #d3d3d3); color: #000; }
+    
+    .loyalty-points {
+      font-size: 0.9rem;
+      color: #a3a3a3;
+      margin-top: 4px;
+    }
+    
+    .loyalty-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    
+    .loyalty-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    
+    .btn-primary {
+      background: var(--accent, #8b5cf6);
+      color: white;
+      border: none;
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent, #8b5cf6);
+      color: var(--accent, #8b5cf6);
+    }
+    
+    .loyalty-transactions {
+      margin-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+    }
+    
+    .transaction-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .transaction-amount {
+      font-weight: 600;
+    }
+    
+    .transaction-amount.earn {
+      color: #10b981;
+    }
+    
+    .transaction-amount.redeem {
+      color: #ef4444;
+    }
+    
+    .transaction-date {
+      font-size: 0.8rem;
+      color: #a3a3a3;
+    }
+    
+    .transaction-desc {
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    
+    .no-transactions {
+      text-align: center;
+      padding: 20px 0;
+      color: #a3a3a3;
+      font-style: italic;
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal-content {
+      background: #1a1f2e;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: #a3a3a3;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .modal-close:hover {
+      color: #fff;
+    }
+    
+    .modal-title {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 16px;
+    }
+    
+    .tier-benefits {
+      margin-top: 20px;
+    }
+    
+    .tier-benefit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .tier-benefit i {
+      color: var(--accent, #8b5cf6);
+    }
+    /* Auth page enhanced visuals + UX (scoped) */
+    body.auth-page {
+      min-height: 100svh; 
+      display: grid; 
+      grid-template-rows: auto 1fr auto;
+      background: var(--bg-primary, #0b1020);
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Ensure theme is applied correctly */
+    body[data-theme="light"].auth-page {
+      --bg-primary: #f9fafb;
+      --text-primary: #1f2937;
+    }
+    
+    body[data-theme="dark"].auth-page {
+      --bg-primary: #0b1020;
+      --text-primary: #f9fafb;
+    }
+    .auth-nav { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 18px; }
+    .auth-brand { display:flex; align-items:center; gap:10px; color:inherit; text-decoration:none; font-weight:700; }
+    .auth-brand img { width:36px; height:36px; border-radius:8px; }
+    .auth-wrap { padding: 18px; position: relative; }
+    .hero { margin: 6px auto 18px; text-align:center; display:grid; gap:6px; }
+    .hero h1 { margin:0; font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    .hero p { margin:0; color:#a3a3a3; }
+    .gradient-text { background: linear-gradient(90deg, var(--accent, #8b5cf6), var(--primary, #22d3ee));
+      -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .auth-grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+    @media (max-width: 900px) { .auth-grid { grid-template-columns: 1fr; } }
+    .foot { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    footer.auth-foot { padding: 24px 18px; text-align:center; }
+
+    /* Glass cards and components */
+    .card { background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.13); border-radius:16px; backdrop-filter: blur(12px) saturate(160%); box-shadow: 0 10px 40px rgba(0,0,0,0.35); position:relative; }
+    .card:hover { border-color: rgba(255,255,255,0.2); }
+
+    /* Neon animated border */
+    .neon { position: relative; }
+    .neon::before { content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px; background: linear-gradient(120deg, rgba(139,92,246,.8), rgba(34,211,238,.8), rgba(139,92,246,.8));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; animation: hue 6s linear infinite; filter: blur(0.2px); }
+    @keyframes hue { to { filter: hue-rotate(360deg); } }
+    .trust-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+    @media (max-width: 700px) { .trust-grid { grid-template-columns: 1fr; } }
+    .trust-badge { display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:12px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); }
+    .trust-badge .icon { width:32px; height:32px; display:grid; place-items:center; background: rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.1); border-radius:8px; }
+
+    /* Accent pills and dividers */
+    .pill { display:inline-block; padding:4px 10px; border-radius:999px; font-size:.8rem; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
+    .section-divider { height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent); margin: 10px 0; }
+
+    /* Steps */
+    .steps-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; }
+    @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
+    .step-card { display:grid; gap:6px; padding:12px; border-radius:12px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); }
+    .step-num { width:28px; height:28px; display:grid; place-items:center; border-radius:8px; background: rgba(34,211,238,.18); border:1px solid rgba(34,211,238,.35); font-weight:700; }
+
+    /* Minor glow for section titles */
+    .glow-title { text-shadow: 0 0 20px rgba(34,211,238,.18); }
+
+    /* Tabs */
+    .auth-tabs { display:flex; gap:8px; position:relative; }
+    .auth-tab { position:relative; background: transparent; border:1px solid rgba(255,255,255,0.14); color:inherit; padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:700; transition: all .22s ease; }
+    .auth-tab:hover { background: rgba(255,255,255,0.06); }
+    .auth-tab.active { background: rgba(255,255,255,0.12); border-color: var(--accent, #8b5cf6); box-shadow: 0 6px 18px rgba(139,92,246,.25) inset; }
+    .auth-tab.active::after { content:""; position:absolute; left:12px; right:12px; bottom:-2px; height:2px; background: linear-gradient(90deg, var(--accent, #8b5cf6), var(--primary, #22d3ee)); border-radius:2px; }
+
+    /* Panels */
+    .auth-panel { display:grid; gap:10px; margin-top:4px; opacity:0; transform: translateY(4px); transition: opacity .18s ease, transform .18s ease; }
+    .auth-panel.show { opacity:1; transform: translateY(0); }
+    .auth-panel[hidden] { display: none !important; }
+    .auth-label { font-weight:600; }
+    .auth-input { width:100%; padding:10px 12px; border-radius:12px; background: rgba(0,0,0,0.28); border:1px solid rgba(255,255,255,0.14); color:inherit; }
+    .auth-input:focus { outline: none; border-color: var(--accent, #8b5cf6); box-shadow: 0 0 0 3px rgba(139,92,246,.25); }
+    .auth-row { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+    .auth-check { display:flex; gap:8px; align-items:center; }
+    .auth-help { color:#a3a3a3; }
+    .error-msg { color: #f87171; font-size: .92rem; display:none; }
+    .error-msg.show { display:block; }
+
+    /* Password strength */
+    .pw-strength { height:8px; border-radius:8px; background: rgba(255,255,255,0.08); overflow:hidden; border:1px solid rgba(255,255,255,0.16); }
+    .pw-bar { height:100%; width:0%; background: linear-gradient(90deg, #ef4444, #f59e0b, #22c55e); transition: width .25s ease; }
+
+    /* Buttons loading */
+    .btn.loading { position: relative; pointer-events:none; opacity:.8; }
+    .btn.loading::after { content:""; position:absolute; right:12px; top:50%; width:16px; height:16px; transform: translateY(-50%); border:2px solid rgba(255,255,255,.6); border-top-color: transparent; border-radius:50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+    /* Scoped primary button polish */
+    .auth-page .btn.primary { background: linear-gradient(135deg, var(--accent, #8b5cf6), var(--primary, #22d3ee)); border: none; color: #fff; box-shadow: 0 0 0 rgba(139,92,246,0); transition: transform .15s ease, box-shadow .2s ease; }
+    .auth-page .btn.primary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(34,211,238,.25), 0 0 0 2px rgba(139,92,246,.25) inset; }
+    /* Scoped secondary button polish */
+    .auth-page .btn.secondary { background: linear-gradient(135deg, var(--accent, #8b5cf6), var(--primary, #22d3ee)); border: none; color: #fff; box-shadow: 0 0 0 rgba(139,92,246,0); transition: transform .15s ease, box-shadow .2s ease; }
+    .auth-page .btn.secondary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: 0 8px 30px rgba(34,211,238,.25), 0 0 0 2px rgba(139,92,246,.25) inset; }
+    .as-link[disabled] { opacity: .6; pointer-events: none; }
+    /* Auth Sidebar Styles */
+    .auth-sidebar {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+      align-content: flex-start;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      height: 100%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      max-height: calc(100vh - 40px);
+      position: sticky;
+      top: 20px;
+    }
+    
+    .auth-sidebar-header {
+      display: grid;
+      gap: 8px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+      font-weight: 500;
+    }
+    
+    .auth-sidebar-header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      line-height: 1.3;
+      background: linear-gradient(90deg, var(--accent, #8b5cf6), var(--primary, #22d3ee));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .auth-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .auth-benefits {
+      display: grid;
+      gap: 16px;
+      margin: 10px 0;
+    }
+    
+    .benefit-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    
+    .benefit-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
+    }
+    
+    .benefit-icon {
+      font-size: 1.4rem;
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .benefit-item h3 {
+      margin: 0 0 4px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+    
+    .benefit-item p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    
+    .auth-extra-card {
+      background: rgba(139, 92, 246, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(139, 92, 246, 0.1);
+    }
+    
+    .auth-extra-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+    
+    .benefits-list {
+      margin: 0;
+      padding: 0 0 0 24px;
+      display: grid;
+      gap: 8px;
+    }
+    
+    .benefits-list li {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    
+    .auth-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: auto;
+      padding-top: 8px;
+    }
+    
+    .auth-actions .btn {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      min-width: 90px;
+    }
+    
+    .auth-actions .btn.ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+    
+    .auth-actions .btn.outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .auth-actions .btn.small {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Community Stats */
+    .community-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+      text-align: center;
+    }
+    
+    .stat-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 8px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .stat-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    
+    .stat-label {
+      font-size: 0.7rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+    
+    /* Testimonial Card */
+    .testimonial-card {
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 10px 0;
+      border: 1px solid rgba(139, 92, 246, 0.15);
+    }
+    
+    .testimonial-content {
+      position: relative;
+      font-style: italic;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+    
+    .quote-icon {
+      position: absolute;
+      left: -8px;
+      top: -8px;
+      font-size: 2rem;
+      opacity: 0.2;
+      line-height: 1;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .testimonial-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .testimonial-role {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+    
+    /* Security Badges */
+    .security-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+      justify-content: center;
+    }
+    
+    .security-badge {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    /* Social Links */
+    .social-links {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+    
+    .social-icon:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body class="auth-page">
+  <header class="auth-nav container">
+    <a class="auth-brand" href="index.html#home">
+      <img src="assets/logo.png" alt="Iany Gaming" />
+      <span>Iany <strong>Gaming</strong></span>
+    </a>
+    <nav>
+      <a class="btn" href="index.html#shop">Torna allo Shop</a>
+    </nav>
+  </header>
+
+  <div class="auth-wrap container">
+    <div class="hero">
+      <h1 class="gradient-text" data-i18n="welcome">Benvenuto su Iany Gaming</h1>
+      <p data-i18n="welcomeSubtitle">Crea un account o accedi per esperienze e vantaggi esclusivi</p>
+    </div>
+    <div class="auth-grid">
+      <aside class="auth-sidebar">
+        <div class="auth-sidebar-header">
+          <img src="assets/logo.png" alt="Iany Gaming" class="auth-logo">
+          <h1 class="gradient-text">Entra nella community Iany Gaming</h1>
+          <p class="welcome-text">Tante novità!!</p>
+        </div>
+        
+        <!-- Statistiche Community -->
+        <div class="community-stats">
+          <div class="stat-item">
+            <span class="stat-number">-</span>
+            <span class="stat-label">Utenti attivi</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">-</span>
+            <span class="stat-label">Clienti soddisfatti</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Assistenza</span>
+          </div>
+        </div>
+        
+        <div class="auth-benefits">
+          <div class="benefit-item">
+            <span class="benefit-icon">🎮</span>
+            <div>
+              <h3>Accesso anticipato</h3>
+              <p>Prova in anteprima i nuovi giochi e contenuti prima degli altri.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <span class="benefit-icon">🏆</span>
+            <div>
+              <h3>Livelli e ricompense</h3>
+              <p>Sblocca premi esclusivi e sconti riservati ai membri.</p>
+            </div>
+          </div>
+          
+          <div class="benefit-item">
+            <span class="benefit-icon">👥</span>
+            <div>
+              <h3>Community attiva</h3>
+              <p>Partecipa a Giveawey  ed eventi esclusivi per i membri sul nostro server discord ufficiale.</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonianze -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <span class="quote-icon">"</span>
+            <p>Ancora nessuna recensione</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="immagine" alt="Utente" class="testimonial-avatar">
+            <div>
+              <div class="testimonial-name">--</div>
+              <div class="testimonial-role">Membro dal ?</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="auth-extra-card">
+          <h3>🎁 Iscriviti ora e ricevi subito:</h3>
+          <ul class="benefits-list">
+            <li><strong>Codici sconto</strong> sul primo acquisto</li>
+            <li><strong>50 punti fedeltà</strong> da usare subito</li>
+            <li><strong>Accesso </strong> alle offerte speciali</li>
+          </ul>
+          
+          <div class="security-badges">
+            <div class="security-badge">🔒 Pagamenti sicuri</div>
+            <div class="security-badge">🛡️ Garanzia soddisfatti</div>
+          </div>
+        </div>
+        
+        <div class="auth-actions">
+          <a href="index.html#faq" class="btn ghost small">Domande? Leggi le FAQ</a>
+          <a href="index.html#contattaci" class="btn outline small">Contattaci</a>
+        </div>
+        
+        <div class="social-links">
+          <span>Seguici su:</span>
+          <div class="social-icons">
+            <a href="https://discord.gg/example" target="_blank" rel="noopener noreferrer" aria-label="Discord" class="social-icon">
+              <i class="fab fa-discord"></i>
+            </a>
+            <a href="https://www.instagram.com/iany_tech_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://youtube.com/example" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://facebook.com/example" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://www.tiktok.com/@iany_tech_officia?_t=ZN-8yfAkEAsxlO&_r=1" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="social-icon">
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <main class="card neon" style="padding:20px; display:grid; gap:12px; align-content:start;">
+        <!-- Loyalty Points Section (shown when user is logged in) -->
+        <div id="loyaltySection" class="loyalty-section" style="display: none;">
+          <div class="loyalty-header">
+            <div>
+              <h3>I tuoi punti fedeltà</h3>
+              <div class="loyalty-balance" id="pointsBalance">0</div>
+              <div class="loyalty-tier" id="loyaltyTier">
+                <i class="fas fa-medal"></i>
+                <span>Bronzo</span>
+              </div>
+            </div>
+            <button id="showTiersBtn" class="btn btn-outline">Vedi livelli</button>
+          </div>
+          
+          <div class="loyalty-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" id="tierProgressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="nextTierProgress">0/500 punti</div>
+            <div class="progress-hint">Mancano <span id="pointsToNextTier">500 punti</span> per il prossimo livello</div>
+          </div>
+          
+          <div class="loyalty-transactions">
+            <h4>Ultime transazioni</h4>
+            <div id="transactionsList" class="transactions-list">
+              <div class="no-transactions">Nessuna transazione recente</div>
+            </div>
+          </div>
+        </div>
+        
+        <nav class="auth-tabs" role="tablist" aria-label="Seleziona modalità">
+          <button id="tabLogin" class="auth-tab active" role="tab" aria-selected="true" data-i18n="login">Accedi</button>
+          <button id="tabRegister" class="auth-tab" role="tab" aria-selected="false" data-i18n="register">Registrati</button>
+        </nav>
+        <p id="authHelp" class="auth-help">Accedi con email e password.</p>
+
+        <section id="panelLogin" class="auth-panel show" role="tabpanel" aria-labelledby="tabLogin">
+          <label class="auth-label" for="email">Email</label>
+          <input class="auth-input" id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+
+          <label class="auth-label" for="password">Password</label>
+          <input class="auth-input" id="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+
+          <div class="auth-row">
+            <label class="auth-check"><input type="checkbox" id="showPw" /> Mostra password</label>
+            <button id="forgot" type="button" class="as-link">Password Dimenticata?</button>
+          </div>
+          <button id="submitLogin" class="btn primary" type="button" style="width:100%">Accedi</button>
+          <div id="loginError" class="error-msg" role="alert"></div>
+        </section>
+
+        <section id="panelRegister" class="auth-panel" role="tabpanel" aria-labelledby="tabRegister" hidden>
+          <label class="auth-label" for="name" data-i18n="name">Nome</label>
+          <input class="auth-input" id="name" type="text" placeholder="" autocomplete="name" data-i18n-placeholder="namePlaceholder" />
+
+          <label class="auth-label" for="emailReg" data-i18n="email">Email</label>
+          <input class="auth-input" id="emailReg" type="email" placeholder="" autocomplete="email" data-i18n-placeholder="emailPlaceholder" />
+
+          <label class="auth-label" for="birthdate" data-i18n="birthday">Data di nascita</label> <span class="required"></span>
+          <input class="auth-input" id="birthdate" type="date" placeholder="YYYY-MM-DD" autocomplete="bday" required
+                 min="1900-01-01" />
+          <small class="form-text text-muted" data-i18n="birthdayHint">Devi avere almeno 16 anni per registrarti</small>
+          
+          <label class="auth-label" for="language" data-i18n="language">Lingua</label>
+          <select class="auth-input" id="language" required>
+            <option value="it">Italiano</option>
+            <option value="en">English</option>
+          </select>
+
+          <label class="auth-label" for="passwordReg" data-i18n="password">Password</label>
+          <input class="auth-input" id="passwordReg" type="password" placeholder="" autocomplete="new-password" data-i18n-placeholder="passwordPlaceholder" />
+          <div class="pw-strength" aria-hidden="true"><div class="pw-bar" id="pwBar"></div></div>
+
+          <label class="auth-label" for="password2" data-i18n="confirmPassword">Conferma Password</label>
+          <input class="auth-input" id="password2" type="password" placeholder="" autocomplete="new-password" data-i18n-placeholder="confirmPasswordPlaceholder" />
+
+          <p class="auth-help">Prima di procedere, leggi i <a href="terms.html" target="_blank" class="as-link">Termini e Condizioni</a>.</p>
+          <div class="auth-row" style="justify-content:flex-start;">
+            
+          </div>
+          <label class="auth-check">
+            <input type="checkbox" id="terms" required />
+            <span data-i18n="terms">Accetto i Termini e Condizioni e l'Informativa sulla Privacy</span>
+            
+          </label>
+          <button id="submitRegister" class="btn primary" type="button" style="width:100%" data-i18n="createAccount">Crea account</button>
+          <div id="regError" class="error-msg" role="alert"></div>
+        </section>
+
+        <!-- Password reset panel (shown when arriving from recovery link) -->
+        <section id="panelReset" class="auth-panel" role="region" aria-label="Reimposta password" hidden>
+          <h3 class="panel-title">Reimposta la tua password</h3>
+          <p class="auth-help">Hai richiesto il recupero della password. Inserisci una nuova password e confermala.</p>
+          <label class="auth-label" for="newPassword">Nuova Password</label>
+          <input class="auth-input" id="newPassword" type="password" placeholder="Min 8 caratteri" autocomplete="new-password" />
+          <label class="auth-label" for="newPassword2">Conferma Password</label>
+          <input class="auth-input" id="newPassword2" type="password" placeholder="Ripeti la password" autocomplete="new-password" />
+          <div class="pw-strength" aria-hidden="true"><div class="pw-bar" id="pwBarReset"></div></div>
+          <button id="submitReset" class="btn primary" type="button" style="width:100%">Aggiorna password</button>
+          <div id="resetError" class="error-msg" role="alert"></div>
+          <div class="auth-row">
+            <button type="button" class="btn ghost" id="cancelReset">Annulla</button>
+          </div>
+        </section>
+
+        
+
+        <!-- Sezione fiducia, in linea con lo shop -->
+        <section class="trust" aria-labelledby="trustTitle">
+          <h3 id="trustTitle" class="section-title glow-title">Perché creare un account</h3>
+          <div class="trust-grid">
+            <div class="trust-badge"><div class="icon">🔒</div><div><strong>Pagamenti sicuri</strong><p class="muted">Transazioni protette con SSL e 3D Secure.</p></div></div>
+            <div class="trust-badge"><div class="icon">⚡</div><div><strong>Consegne rapide</strong><p class="muted">Digitali immediate ove previsto.</p></div></div>
+            <div class="trust-badge"><div class="icon">🛡️</div><div><strong>Assistenza dedicata</strong><p class="muted">Sempre al tuo fianco.</p></div></div>
+          </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true"></div>
+
+        <!-- Come funziona -->
+        <section class="steps" aria-labelledby="stepsTitle">
+          <h3 id="stepsTitle" class="panel-title">Come funziona</h3>
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-num">1</div>
+              <strong>Crea account o  accedi</strong>
+              <p class="muted">Usa la tua email per creare un account o accedi se ne hai già uno.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-num">2</div>
+              <strong>Personalizza</strong>
+              <p class="muted">Salva indirizzi e preferenze per un checkout più veloce.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-num">3</div>
+              <strong>Acquista</strong>
+              <p class="muted">Completa l’ordine in sicurezza e ricevi subito conferma e ricevuta.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ estesa -->
+        <section class="card" style="padding:14px; display:grid; gap:8px;">
+          <h3 class="panel-title">Domande frequenti</h3>
+          <details><summary class="muted">Devo confermare l'email?</summary><p class="muted">In alcuni casi inviamo una mail di conferma. Segui il link per attivare l'account.</p></details>
+          <details><summary class="muted">Posso cambiare email?</summary><p class="muted">Sì, dalle impostazioni account dopo l'accesso.</p></details>
+          <details><summary class="muted">Come recupero la password?</summary><p class="muted">Usa "Password Dimenticata?" nella sezione Accedi.</p></details>
+          <details><summary class="muted">Il salvataggio dei dati è sicuro?</summary><p class="muted">Usiamo Supabase per la gestione sicura dell’autenticazione. Le password non sono mai visibili allo staff.</p></details>
+          <details><summary class="muted">Riceverò spam?</summary><p class="muted">Solo se acconsenti alla newsletter. Puoi disiscriverti in qualsiasi momento.</p></details>
+        </section>
+
+        
+
+        <!-- Supporto -->
+        <section class="card" style="padding:14px; display:grid; gap:8px;">
+          <h3 class="panel-title">Serve aiuto?</h3>
+          <p class="muted">Il nostro team è a disposizione per qualsiasi problema legato all’accesso o alla registrazione.</p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn" href="index.html#contattaci">Apri Assistenza</a>
+            <a class="btn ghost" href="mailto:support@ianygaming.example">Scrivici via email</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+
+  <!-- Loyalty Tiers Modal -->
+  <div id="tiersModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>I tuoi vantaggi fedeltà</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="current-tier-badge" id="currentTierBadge">
+          <i class="fas fa-medal"></i>
+          <span>Bronzo</span>
+        </div>
+        <h3 id="currentTierName">Livello Bronzo</h3>
+        
+        <div class="tier-benefits">
+          <h4>I tuoi vantaggi:</h4>
+          <div id="tierBenefitsList" class="benefits-list">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+        
+        <div class="tier-progress">
+          <h4>Prossimo livello</h4>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%" id="modalTierProgress"></div>
+          </div>
+          <div class="progress-text" id="modalNextTier">0/500 punti per Argento</div>
+        </div>
+      </div>
+      
+      <div class="tier-benefits">
+        <h4>I tuoi vantaggi:</h4>
+        <div id="tierBenefitsList" class="benefits-list">
+          <div class="tier-benefit">
+            <i class="fas fa-check-circle"></i>
+            <span>1 punto ogni 1€ speso</span>
+          </div>
+          <div class="tier-benefit">
+            <i class="fas fa-check-circle"></i>
+            <span>5% di sconto su acquisti con punti</span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 24px;">
+        <h4 style="margin: 0 0 12px 0; font-size: 1rem;">Prossimi livelli</h4>
+        <div style="display: grid; gap: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #c0c0c0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #000;">
+                <i class="fas fa-medal"></i>
+              </div>
+              <span>Argento</span>
+            </div>
+            <span style="font-size: 0.9rem; color: #a3a3a3;">500+ punti</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #ffd700; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #000;">
+                <i class="fas fa-medal"></i>
+              </div>
+              <span>Oro</span>
+            </div>
+            <span style="font-size: 0.9rem; color: #a3a3a3;">2,000+ punti</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 24px; height: 24px; border-radius: 50%; background: #e5e4e2; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: #000;">
+                <i class="fas fa-crown"></i>
+              </div>
+              <span>Platino</span>
+            </div>
+            <span style="font-size: 0.9rem; color: #a3a3a3;">5,000+ punti</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include i18n and Loyalty System JS -->
+  <script src="js/i18n.js"></script>
+  <script src="loyalty.js"></script>
+  
+  <script>
+    // Set Supabase configuration for script.js initialization
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set configuration that script.js will use
+      // TODO: Replace with your actual Supabase project URL and anon key
+      window.SUPABASE_URL = 'https://urkarrmozdccfcmbnfnx.supabase.co';
+      window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVya2Fycm1vemRjY2ZjbWJuZm54Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2NjMxNTIsImV4cCI6MjA3MDIzOTE1Mn0.ElclQbhk6-aKbOlt5abFCxxO-M7KBo2HxTMbIdEKiEI';
+      
+      // Wait for script.js to initialize SUPA, then proceed
+      const waitForSupa = () => {
+        if (window.SUPA || window.supabaseClient) {
+          initAuthUI();
+        } else {
+          setTimeout(waitForSupa, 100);
+        }
+      };
+      waitForSupa();
+
+      // Service Worker registration for offline support
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('SW registered'))
+          .catch(() => console.log('SW registration failed'));
+      }
+
+      // Set birthdate max to today minus 16 years
+      try {
+        const bd = document.getElementById('birthdate');
+        if (bd) {
+          const today = new Date();
+          const maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+          const pad = n => String(n).padStart(2, '0');
+          const maxStr = `${maxDate.getFullYear()}-${pad(maxDate.getMonth()+1)}-${pad(maxDate.getDate())}`;
+          bd.setAttribute('max', maxStr);
+        }
+      } catch(_) {}
+    });
+
+    // Move all UI initialization here
+    function initAuthUI() {
+      // Toggle between login/register
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      const panelLogin = document.getElementById('panelLogin');
+      const panelRegister = document.getElementById('panelRegister');
+
+      if (tabLogin && tabRegister) {
+        tabLogin.addEventListener('click', () => setMode('login'));
+        tabRegister.addEventListener('click', () => setMode('register'));
+      }
+
+      // Form submission handlers
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          doLogin();
+        });
+      }
+
+      if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          doRegister();
+        });
+      }
+    }
+
+    // Initialize loyalty system when DOM is loaded
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Initialize i18n first (guard SUPA)
+      const SUPA = getSupa();
+      if (window.i18n && SUPA) {
+        try {
+          const { data: { user } } = await SUPA.auth.getUser();
+          if (user) {
+            const { data: profile } = await SUPA
+              .from('profiles')
+              .select('preferred_language')
+              .eq('id', user.id)
+              .single();
+            if (profile?.preferred_language) {
+              window.i18n.setLanguage(profile.preferred_language);
+            }
+          }
+        } catch(_) {}
+      }
+      
+      // Check if user is authenticated (guard SUPA)
+      if (!SUPA) return;
+      const { data: { user } } = await SUPA.auth.getUser();
+      if (!user) return;
+
+      // Initialize loyalty system
+      try {
+        window.loyaltySystem = new LoyaltySystem(user.id);
+        await window.loyaltySystem.init();
+        const loyaltySection = document.getElementById('loyaltySection');
+        if (loyaltySection) loyaltySection.style.display = 'block';
+      } catch(_) {}
+      
+      // Setup modal event listeners
+      const showTiersBtn = document.getElementById('showTiersBtn');
+      const modal = document.getElementById('tiersModal');
+      const closeBtn = modal?.querySelector('.modal-close');
+      showTiersBtn?.addEventListener('click', () => { if (modal) modal.style.display = 'block'; });
+      closeBtn?.addEventListener('click', () => { if (modal) modal.style.display = 'none'; });
+      window.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; } });
+      
+      // Update auth state changes
+      try {
+        if (SUPA) {
+          SUPA.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+              window.location.reload();
+            }
+          });
+        }
+      } catch(_) {}
+      
+      // Apply saved settings (theme, language, etc.)
+      if (window.applySettingsFromStore) {
+        const settings = typeof readSettings === 'function' ? readSettings() : { theme: 'dark' };
+        document.body.setAttribute('data-theme', settings.theme || 'dark');
+        applySettingsFromStore();
+      }
+    });
+
+    // Utilities
+    const $ = (s, c=document) => c.querySelector(s);
+    function showToast(msg, type='info') { try { console.log('[toast]', type, msg); } catch(_) {} }
+
+    // Mode handling
+    const tabLogin = $('#tabLogin');
+    const tabRegister = $('#tabRegister');
+    const panelLogin = $('#panelLogin');
+    const panelRegister = $('#panelRegister');
+    const help = $('#authHelp');
+
+    function setMode(mode) {
+      const isLogin = mode !== 'register';
+      tabLogin.classList.toggle('active', isLogin);
+      tabRegister.classList.toggle('active', !isLogin);
+      tabLogin.setAttribute('aria-selected', String(isLogin));
+      tabRegister.setAttribute('aria-selected', String(!isLogin));
+      panelLogin.hidden = !isLogin;
+      panelRegister.hidden = isLogin;
+      panelLogin.classList.toggle('show', isLogin);
+      panelRegister.classList.toggle('show', !isLogin);
+      // Always hide reset panel when switching manually
+      const pr = document.getElementById('panelReset');
+      if (pr) { pr.hidden = true; pr.classList.remove('show'); }
+      help.textContent = isLogin ? 'Accedi con email e password.' : 'Crea un account con email e password.';
+      if (isLogin) setTimeout(()=> $('#email')?.focus(), 0); else setTimeout(()=> $('#name')?.focus(), 0);
+    }
+
+    tabLogin?.addEventListener('click', () => setMode('login'));
+    tabRegister?.addEventListener('click', () => setMode('register'));
+
+    // Keyboard navigation for tabs
+    document.querySelector('.auth-tabs')?.addEventListener('keydown', (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); tabRegister?.focus(); setMode('register'); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); tabLogin?.focus(); setMode('login'); }
+    });
+
+    // Init mode from URL ?mode=register
+    const params = new URLSearchParams(location.search);
+    const startMode = (params.get('mode') === 'register') ? 'register' : 'login';
+    setMode(startMode);
+
+    // Show/hide password
+    const pw = $('#password');
+    const showPw = $('#showPw');
+    showPw?.addEventListener('change', () => { try { pw.type = showPw.checked ? 'text' : 'password'; } catch(_) {} });
+
+    // Register strength meter and enter key handlers
+    const pwReg = $('#passwordReg');
+    const pwBar = $('#pwBar');
+    function strengthScore(p) {
+      if (!p) return 0;
+      let s = 0;
+      if (p.length >= 8) s += 1;
+      if (/[A-Z]/.test(p)) s += 1;
+      if (/[a-z]/.test(p)) s += 1;
+      if (/[0-9]/.test(p)) s += 1;
+      if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/.test(p)) s += 1;
+      return Math.min(s, 5);
+    }
+    pwReg?.addEventListener('input', () => {
+      const score = strengthScore(pwReg.value);
+      const pct = (score/5)*100;
+      if (pwBar) pwBar.style.width = pct + '%';
+    });
+
+    // Submit on Enter in login panel
+    $('#panelLogin')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('submitLogin')?.click(); }
+    });
+    // Submit on Enter in register panel
+    $('#panelRegister')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); doRegister(); }
+    });
+    
+    // Click handlers for login and password recovery
+    document.getElementById('submitLogin')?.addEventListener('click', () => { doLogin(); });
+    document.getElementById('forgot')?.addEventListener('click', () => { doForgot(); });
+
+    // Aggiungi gestore per il click sul pulsante di registrazione
+    document.getElementById('submitRegister')?.addEventListener('click', doRegister);
+
+    // Year (guard if element doesn't exist)
+    (function(){
+      const y = document.getElementById('year');
+      if (y) y.textContent = String(new Date().getFullYear());
+    })();
+
+    // Reset password strength meter
+    const newPw = document.getElementById('newPassword');
+    const newPw2 = document.getElementById('newPassword2');
+    const pwBarReset = document.getElementById('pwBarReset');
+    newPw?.addEventListener('input', () => {
+      const score = strengthScore(newPw.value);
+      const pct = (score/5)*100;
+      if (pwBarReset) pwBarReset.style.width = pct + '%';
+    });
+
+    // Handle reset submit
+    document.getElementById('submitReset')?.addEventListener('click', async () => {
+      const SUPA = getSupa();
+      if (!SUPA) { showToast('Recupero non disponibile', 'error'); return; }
+      const p1 = (newPw?.value || '');
+      const p2 = (newPw2?.value || '');
+      const errEl = document.getElementById('resetError');
+      function setErr(msg){ if (errEl){ errEl.textContent = msg; errEl.classList.add('show'); } showToast(msg,'error'); }
+      function clrErr(){ if (errEl){ errEl.textContent = ''; errEl.classList.remove('show'); } }
+      clrErr();
+      const v = validatePw(p1);
+      if (!v.ok) { setErr('Password non conforme: ' + v.reasons.join(', ')); return; }
+      if (p1 !== p2) { setErr('Le password non coincidono'); return; }
+      const btn = document.getElementById('submitReset');
+      btn?.classList.add('loading'); btn.disabled = true;
+      try {
+        const { data, error } = await SUPA.auth.updateUser({ password: p1 });
+        if (error) throw error;
+        showToast('Password aggiornata. Ora puoi accedere.', 'success');
+        setTimeout(()=>{ location.href = 'index.html#account'; }, 900);
+      } catch(e) {
+        setErr('Errore nel salvataggio della nuova password');
+      } finally {
+        btn?.classList.remove('loading'); if (btn) btn.disabled = false;
+      }
+    });
+
+    // Cancel reset
+    document.getElementById('cancelReset')?.addEventListener('click', () => {
+      panelReset.hidden = true; panelReset.classList.remove('show');
+      setMode('login');
+    });
+
+    // Check if we landed here from a recovery link
+    maybeHandleRecoveryFromUrl();
+
+    // Use the global SUPA client from script.js (robust resolver)
+    const getSupa = () => {
+      try {
+        // Primary: script.js exposes window.supa() to return the active client
+        if (typeof window.supa === 'function') {
+          const c = window.supa();
+          if (c) return c;
+        }
+      } catch(_) {}
+      try {
+        if (window.supabaseClient) return window.supabaseClient;
+      } catch(_) {}
+      try {
+        if (window.SUPA) return window.SUPA;
+      } catch(_) {}
+      // Last resort: create a client if config + library are present
+      try {
+        const url = window.SUPABASE_URL;
+        const key = window.SUPABASE_ANON_KEY;
+        if (url && key && window.supabase && typeof window.supabase.createClient === 'function') {
+          const c = window.supabase.createClient(url, key);
+          try { window.supabaseClient = c; } catch(_) {}
+          return c;
+        }
+      } catch(_) {}
+      return null;
+    };
+
+    // Wait until Supabase client is ready (polling)
+    async function waitForSupa(timeoutMs = 5000) {
+      const start = Date.now();
+      while (!getSupa()) {
+        if (Date.now() - start > timeoutMs) return false;
+        await new Promise(r => setTimeout(r, 100));
+      }
+      return true;
+    }
+
+    // Recovery detection and panel toggle
+    const panelReset = document.getElementById('panelReset');
+    const panelLoginEl = document.getElementById('panelLogin');
+    const panelRegisterEl = document.getElementById('panelRegister');
+    const helpEl = document.getElementById('authHelp');
+    async function maybeHandleRecoveryFromUrl(){
+      try {
+        const h = new URLSearchParams((location.hash||'').replace(/^#/, ''));
+        const q = new URLSearchParams(location.search||'');
+        const type = q.get('type') || h.get('type') || '';
+        const at = h.get('access_token');
+        const rt = h.get('refresh_token');
+        if (type.toLowerCase() === 'recovery' && at) {
+          if (SUPA && typeof SUPA.auth.setSession === 'function') {
+            try { await SUPA.auth.setSession({ access_token: at, refresh_token: rt || '' }); } catch(_) {}
+          }
+          // Show reset panel
+          panelLoginEl.hidden = true; panelRegisterEl.hidden = true; panelReset.hidden = false;
+          panelLoginEl.classList.remove('show'); panelRegisterEl.classList.remove('show'); panelReset.classList.add('show');
+          if (helpEl) helpEl.textContent = 'Reimposta la password per completare il recupero.';
+          setTimeout(()=> document.getElementById('newPassword')?.focus(), 0);
+        }
+      } catch(_) {}
+    }
+
+    function setBtnLoading(btn, loading) {
+      if (!btn) return;
+      btn.classList.toggle('loading', !!loading);
+      btn.disabled = !!loading;
+    }
+
+    async function doForgot() {
+      const email = ($('#email')?.value || '').trim();
+      await waitForSupa(4000);
+      const SUPA = getSupa();
+      if (!email || !email.includes('@')) { showToast('Inserisci una email valida', 'error'); return; }
+      if (!SUPA) { showToast('Recupero password non disponibile', 'error'); return; }
+      const forgotBtn = document.getElementById('forgot');
+      const oldText = forgotBtn?.textContent;
+      try {
+        if (forgotBtn) { forgotBtn.setAttribute('disabled','true'); forgotBtn.textContent = 'Invio...'; }
+        const redirectTo = location.origin + '/auth.html#type=recovery';
+        const { error } = await SUPA.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw error;
+        showToast('Email per reimpostare la password inviata. Controlla anche la cartella Spam.', 'success');
+        if (forgotBtn) forgotBtn.textContent = 'Inviata ✅';
+      } catch(e) {
+        showToast('Errore invio email di recupero', 'error');
+        if (forgotBtn) forgotBtn.textContent = oldText || 'Password Dimenticata?';
+      } finally {
+        if (forgotBtn) setTimeout(() => { try { forgotBtn.removeAttribute('disabled'); forgotBtn.textContent = oldText || 'Password Dimenticata?'; } catch(_){} }, 1800);
+      }
+    }
+
+    async function doLogin() {
+      await waitForSupa(4000);
+      const SUPA = getSupa();
+      if (!SUPA) { showToast('Autenticazione non disponibile', 'error'); return; }
+      const email = ($('#email')?.value || '').trim();
+      const password = $('#password')?.value || '';
+      const loginErr = document.getElementById('loginError');
+      function setLE(msg) { if (loginErr) { loginErr.textContent = msg; loginErr.classList.add('show'); } showToast(msg, 'error'); }
+      function clrLE() { if (loginErr) { loginErr.textContent = ''; loginErr.classList.remove('show'); } }
+      clrLE();
+      if (!email || !email.includes('@')) { setLE('Inserisci una email valida'); return; }
+      if (!password || password.length < 6) { setLE('Password troppo corta (min 6 caratteri)'); return; }
+      const btn = document.getElementById('submitLogin');
+      setBtnLoading(btn, true);
+      try {
+        const { data, error } = await SUPA.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        if (!data?.user) throw new Error('missing_user');
+        showToast('Accesso effettuato', 'success');
+        location.href = 'index.html#account';
+      } catch(e) {
+        const msg = String(e?.message || '').toLowerCase();
+        
+        if (msg.includes('invalid login') || msg.includes('invalid credentials')) setLE('Credenziali non valide');
+        else if (msg.includes('not confirmed') || msg.includes('email not confirmed')) {
+          setLE('Email non confermata. Controlla la tua casella di posta (anche Spam).');
+          // Aggiungi azione per rinviare la conferma
+          if (loginErr) {
+            loginErr.innerHTML = `Email non confermata. Controlla la tua casella di posta (anche Spam). <button id="resendConfirm" class="as-link" type="button">Rinvia email di conferma</button>`;
+            const resendBtn = document.getElementById('resendConfirm');
+            resendBtn?.addEventListener('click', async () => {
+              await doResendConfirmation(email);
+            });
+          }
+        }
+        else setLE('Errore autenticazione');
+      } finally {
+        setBtnLoading(btn, false);
+      }
+    }
+
+    // Rinvia email di conferma registrazione
+    async function doResendConfirmation(email) {
+      try {
+        await waitForSupa(4000);
+        const SUPA = getSupa();
+        if (!SUPA) { showToast('Servizio non disponibile al momento', 'error'); return; }
+        const redirectTo = location.origin + '/auth.html';
+        const { error } = await SUPA.auth.resend({ type: 'signup', email, options: { emailRedirectTo: redirectTo } });
+        if (error) throw error;
+        showToast('Email di conferma inviata. Controlla anche la cartella Spam.', 'success');
+      } catch(e) {
+        showToast('Impossibile inviare l\'email di conferma in questo momento', 'error');
+      }
+    }
+
+    function validatePw(pw) {
+      const reasons = [];
+      if (!pw || pw.length < 8) reasons.push('almeno 8 caratteri');
+      if (!/[A-Z]/.test(pw)) reasons.push('1 maiuscola');
+      if (!/[a-z]/.test(pw)) reasons.push('1 minuscola');
+      if (!/[0-9]/.test(pw)) reasons.push('1 numero');
+      if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/.test(pw)) reasons.push('1 simbolo');
+      if (/\s/.test(pw)) reasons.push('niente spazi');
+      return { ok: reasons.length === 0, reasons };
+    }
+
+    async function doRegister() {
+      await waitForSupa(4000);
+      const SUPA = getSupa();
+      if (!SUPA) {
+        showToast('Errore: Supabase non è stato inizializzato correttamente', 'error');
+        console.error('Supabase client non inizializzato');
+        return;
+      }
+      
+      // Mostra un feedback immediato all'utente
+      showToast('Registrazione in corso...', 'info');
+      const name = ($('#name')?.value || '').trim();
+      const emailR = ($('#emailReg')?.value || '').trim().toLowerCase();
+      const birthdate = ($('#birthdate')?.value || '').trim();
+      const language = ($('#language')?.value || 'it'); // Get selected language
+      const pw1 = $('#passwordReg')?.value || '';
+      const pw2 = $('#password2')?.value || '';
+      const termsOk = !!$('#terms')?.checked;
+      
+      // Set the selected language immediately for better UX
+      if (window.i18n) {
+        window.i18n.setLanguage(language);
+      }
+      const regErr = document.getElementById('regError');
+      const submitBtn = document.getElementById('submitRegister');
+      
+      function setErr(msg) { 
+        if (regErr) { 
+          regErr.textContent = msg; 
+          regErr.classList.add('show'); 
+        } 
+        showToast(msg, 'error'); 
+      }
+      
+      function clrErr() { 
+        if (regErr) { 
+          regErr.textContent = ''; 
+          regErr.classList.remove('show'); 
+        } 
+      }
+      
+      clrErr();
+      
+      // Input validation
+      if (!name) { setErr('Inserisci il nome'); $('#name')?.focus(); return; }
+      
+      // Validate birthdate
+      const t = (k, fb) => (window.i18n && typeof window.i18n.t === 'function') ? window.i18n.t(k) : (fb || k);
+      if (!birthdate) {
+        setErr(t('birthdateRequired', 'Inserisci la tua data di nascita'));
+        $('#birthdate')?.focus();
+        return;
+      }
+
+      // Check if user is at least 16 years old
+      const birthDate = new Date(birthdate);
+      if (isNaN(birthDate.getTime())) {
+        setErr(t('invalidBirthdate', 'Data di nascita non valida'));
+        $('#birthdate')?.focus();
+        return;
+      }
+      const today = new Date();
+      const minAgeDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+      if (birthDate > minAgeDate) {
+        setErr(t('minimumAgeError', 'Devi avere almeno 16 anni per registrarti'));
+        $('#birthdate')?.focus();
+        return;
+      }
+      if (!emailR || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailR)) { 
+        setErr('Inserisci una email valida'); 
+        $('#emailReg')?.focus(); 
+        return; 
+      }
+      
+      const { ok, reasons } = validatePw(pw1);
+      if (!ok) { 
+        setErr('Password non conforme: ' + reasons.join(', ')); 
+        return; 
+      }
+      
+      if (pw1 !== pw2) { 
+        setErr('Le password non coincidono'); 
+        $('#password2')?.focus(); 
+        return; 
+      }
+      
+      if (!termsOk) { 
+        setErr('Devi accettare Termini e Privacy'); 
+        return; 
+      }
+      
+      // Disable button during registration
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrazione in corso...';
+      }
+      
+      try {
+        // Register user con email di conferma
+        const { data, error } = await SUPA.auth.signUp({
+          email: emailR,
+          password: pw1,
+          options: {
+            emailRedirectTo: window.location.origin + '/auth.html?mode=login',
+            data: {
+              full_name: name,
+              email: emailR,
+              birthdate: birthdate || null,
+              preferred_language: language // Save language preference
+            }
+          }
+        });
+        
+        if (error) throw error;
+        
+        // Initialize loyalty points for new user
+        if (data?.user?.id) {
+// Upsert profile with additional metadata (e.g., birthdate)
+          try {
+            await SUPA.from('profiles').upsert({
+              id: data.user.id,
+              name: name,
+              email: emailR,
+              birthdate: birthdate || null,
+              preferred_language: language,
+              updated_at: new Date().toISOString()
+            });
+          } catch (e) {
+            console.warn('Profile upsert failed (non-bloccante):', e);
+          }
+          // Nota: non inseriamo più direttamente in public.loyalty_points dal client.
+          // L'accredito iniziale viene gestito via RPC (add_loyalty_points) e il trigger
+          // su public.loyalty_transactions aggiorna automaticamente il saldo/tier.
+        }
+        
+        // Grant 50 loyalty points to new user
+        try {
+          if (SUPA) {
+            await SUPA.rpc('add_loyalty_points', {
+              p_user_id: data.user.id,
+              p_points: 50,
+              p_reference_type: 'signup',
+              p_reference_id: null,
+              p_metadata: { reason: 'Registrazione completata' }
+            });
+          }
+        } catch (pointsError) {
+          console.error('Error adding welcome points:', pointsError);
+          // Don't fail registration if points can't be added
+        }
+
+        
+        
+        // Success - show message and switch to login
+        const successMsg = 'Registrazione completata! Controlla la tua email per confermare l\'account (controlla anche la cartella Spam). Hai ricevuto 50 punti fedeltà di benvenuto!';
+        showToast(successMsg, 'success');
+        
+        // Mostra un messaggio più visibile all'utente
+        const regPanel = document.getElementById('panelRegister');
+        if (regPanel) {
+          const successDiv = document.createElement('div');
+          successDiv.className = 'success-message';
+          successDiv.innerHTML = `
+            <div style="text-align: center; padding: 15px; background: #e8f5e9; border-radius: 4px; margin: 10px 0;">
+              <p style="margin: 0; color: #2e7d32; font-weight: 500;">${successMsg}</p>
+              <p style="margin: 10px 0 0 0; font-size: 0.9em;">
+                Non hai ricevuto l'email? <a href="#" id="resendEmail" style="color: #1b5e20; text-decoration: underline;">Invia di nuovo</a>
+              </p>
+            </div>
+          `;
+          regPanel.insertBefore(successDiv, regPanel.firstChild);
+          
+          // Aggiungi gestore per il reinvio dell'email
+          document.getElementById('resendEmail')?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+              const { error } = await SUPA.auth.resend({
+                type: 'signup',
+                email: emailR,
+                options: {
+                  emailRedirectTo: window.location.origin + '/auth.html?mode=login'
+                }
+              });
+              if (error) throw error;
+              showToast('Email di conferma inviata nuovamente!', 'success');
+            } catch (err) {
+              console.error('Errore nel reinvio email:', err);
+              showToast('Errore nel reinvio email. Riprova più tardi.', 'error');
+            }
+          });
+        }
+        
+        // Passa alla schermata di login dopo un breve ritardo
+        setTimeout(() => {
+          setMode('login');
+          $('#email').value = emailR; // Pre-fill email in login form
+        }, 3000);   
+      } catch(e) {
+        console.error('Registration error:', e);
+        const msg = String(e?.message || '').toLowerCase();
+        
+        if (msg.includes('user already registered') || msg.includes('already in use')) {
+          showToast('Questa email è già registrata. Prova ad accedere.', 'info');
+          setMode('login');
+        } else if (msg.includes('email') && msg.includes('invalid')) {
+          setErr('Formato email non valido');
+        } else {
+          setErr('Errore durante la registrazione. Riprova più tardi.');
+        }
+      } finally {
+        // Re-enable button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Registrati';
+        }
+      }
+    }
+
+    // Event listeners are now managed in initAuthUI()
+  </script>
+</body>
+</html>
